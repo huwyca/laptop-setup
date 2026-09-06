@@ -1,0 +1,19 @@
+[user]
+	name = Hunter Cassidy
+	email = huwyca@gmail.com
+
+[credential]
+	helper = osxkeychain
+
+[alias]
+	# Shorthand for git checkout.
+	co = checkout
+	# Show the most recent commit on the current branch.
+	last = log -1 HEAD
+	# Pretty graph of the last 30 commits across all branches.
+	lg = "log --graph --decorate -30 --all --topo-order --date=format-local:'%Y-%m-%d %H:%M:%S' --pretty=format:'%C(cyan)%h%Creset %C(black bold)%ad%Creset%C(auto)%d %s'"
+	# List branches newest-first with date, name, subject, and relative age.
+	br = "branch --format='%(color:yellow)%(committerdate:short)%(color:reset) %(color:green)%(align:40)%(refname:short)%(end)%(color:reset) %(color:white)%(contents:subject) %(color:cyan)(%(committerdate:relative))%(color:reset)' --sort=-creatordate"
+	newestb = "br --sort=-committerdate"
+	oldestb = "br --sort=committerdate"
+

@@ -1,0 +1,17 @@
+# Shell and command-line utilities intentionally selected for this laptop.
+brew "bash"
+brew "bash-completion@2"
+brew "bat"
+brew "coreutils"
+brew "dust"
+brew "fd"
+brew "gh"
+brew "git"
+brew "jless"
+brew "jq"
+brew "neovim"
+brew "nvm"
+brew "pup"
+brew "ripgrep"
+brew "tree"
+

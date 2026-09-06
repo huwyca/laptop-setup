@@ -1,0 +1,5 @@
+# Keep interactive shell configuration in one place.
+if [[ -r "$HOME/.bashrc" ]]; then
+  source "$HOME/.bashrc"
+fi
+
