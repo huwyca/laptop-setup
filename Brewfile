@@ -14,4 +14,5 @@ brew "nvm"
 brew "pup"
 brew "ripgrep"
 brew "tree"
+brew "tree-sitter-cli"
 

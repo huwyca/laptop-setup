@@ -8,7 +8,6 @@ set -euo pipefail
 
 REPO_DIR="$(cd "$(dirname "$0")" && pwd)"
 BACKUP_SUFFIX="pre-laptop-setup-$(date +%Y%m%d%H%M%S)"
-NODE_VERSION="24.15.0"
 
 if [[ "$(uname -s)" != "Darwin" ]]; then
   echo "This setup supports macOS only." >&2
@@ -77,9 +76,14 @@ export NVM_DIR="$HOME/.nvm"
 mkdir -p "$NVM_DIR"
 # shellcheck source=/dev/null
 source "/opt/homebrew/opt/nvm/nvm.sh"
-nvm install "$NODE_VERSION"
-nvm alias default "$NODE_VERSION"
-nvm use "$NODE_VERSION"
+nvm install --lts
+nvm alias default "lts/*"
+nvm use --lts
+
+if ! command -v pnpm >/dev/null 2>&1; then
+  echo "Installing pnpm."
+  curl -fsSL https://get.pnpm.io | sh -
+fi
 
 if ! command -v rustup >/dev/null 2>&1; then
   echo "Installing rustup."
@@ -95,6 +99,16 @@ rustup toolchain install 1.97.1
 rustup default stable
 rustup target add aarch64-apple-darwin x86_64-apple-darwin
 rustup component add clippy llvm-tools-preview rust-docs rustfmt
+
+if ! command -v uv >/dev/null 2>&1; then
+  echo "Installing uv."
+  curl -LsSf https://astral.sh/uv/install.sh | sh
+fi
+
+if ! command -v pants >/dev/null 2>&1; then
+  echo "Installing the Pants launcher."
+  curl --proto '=https' --tlsv1.2 -fsSL https://static.pantsbuild.org/setup/get-pants.sh | bash
+fi
 
 "$REPO_DIR/scripts/bootstrap-neovim.sh"
 "$REPO_DIR/scripts/macos-settings.sh"

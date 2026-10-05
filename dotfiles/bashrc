@@ -5,6 +5,15 @@ fi
 
 export HOMEBREW_NO_ANALYTICS=1
 
+# Work around a Command Line Tools bug where clang/ld default to the newest
+# SDK on disk, which can be a pre-release one (e.g. MacOSX27.sdk) whose .tbd
+# files use an arch-variant syntax the installed linker can't parse yet
+# ("ld: tapi error: malformed file ... unknown architecture"). Pin SDKROOT to
+# the stable SDK (the `MacOSX.sdk` symlink) so clang/cargo builds that link
+# system libraries succeed.
+STABLE_SDK="/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
+[[ -d "$STABLE_SDK" ]] && export SDKROOT="$STABLE_SDK"
+
 # Prefer the unprefixed GNU utilities installed by Homebrew coreutils.
 if [[ -n "$HOMEBREW_PREFIX" ]]; then
   export PATH="$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin:$PATH"
